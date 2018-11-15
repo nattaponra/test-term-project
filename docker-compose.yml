@@ -1,0 +1,19 @@
+
+version: '2'
+
+services:
+  web:
+    container_name: web
+    image: nginx:latest
+    ports:
+     - "80:80"
+    volumes:
+    - ./Main-Implemented:/code
+    - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
+
+  php:
+    container_name: php
+    image: php:7.2
+    volumes:
+    - ./Main-Implemented:/code
+
