@@ -1,18 +1,20 @@
 ##Term Project 
-#### 1. Clone Project
-```
-git clone https://github.com/nattaponra/test-term-project.git
-```
-#### 2.Install docker and docker-compose
+#### 1.Install docker and docker-compose
 - docker: https://docs.docker.com/install/
 - docker-compose: https://docs.docker.com/compose/install/#install-compose
 
+
+#### 2. Clone Project
+```
+git clone https://github.com/nattaponra/test-term-project.git
+```
 
 #### 3.Run docker-compose to start service (Nginx,PHP-FPM)
 ```
 cd test-term-project
 docker-compose up -d
 ```
+
 #### 4.Install PHP Packages via Composer
 ```
 docker exec -i phpfpm composer install
