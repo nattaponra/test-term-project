@@ -16,6 +16,11 @@ class Withdrawal
         $result = array("accountNumber" => '',"accountName" => '' ,"accountBalance" => '',"errorMessage" => '');
         if(is_numeric($amount))
         {
+            if($amount > 20000)
+            {
+                $result["errorMessage"] = "จำนวนเงินต้องไม่เกิน 20,000 บาท";
+                return;
+            }
             if(strlen(strlen($this->acctNum) == 10))
             {
                 if(is_numeric($this->acctNum))
