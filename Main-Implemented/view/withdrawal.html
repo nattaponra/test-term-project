@@ -36,7 +36,7 @@
     }
 </style>
 
-<body>
+<body onload="loadCustInfo()">
     <header class="header">
         <nav class="navbar" style="background: #ef5285">
             <div class="container-fluid">
@@ -59,7 +59,7 @@
                         </li>
                         <!-- Logout    -->
                         <li class="nav-item">
-                            <a id="logoutBtn" href="#" class="nav-link logout">ออกจากระบบ
+                            <a id="logoutBtn" href="#" class="nav-link logout"s>ออกจากระบบ
                                 <i class="fa fa-sign-out"></i>
                             </a>
                         </li>
@@ -94,7 +94,7 @@
                                     <span id="accBalance" class="pink">accBalance</span> บาท</p>
                                 <form id="withdrawalForm" class="form-horizontal">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">จำนวนเงิน
+                                        <label class="col-sm-2 form-control-label">จำนวนเงิน 1 - 20,000 บาท
                                         </label>
                                         <div class="col-sm-6">
                                             <input id="amount" type="number" min="1" class="form-control form-control-warning" required>
@@ -115,6 +115,7 @@
         </section>
     </div>
     <!-- Javascript files-->
+    <script src="../lib/js/cookie-mgmt.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../lib/js/tether.min.js"></script>
     <script src="../lib/js/bootstrap.min.js"></script>
@@ -122,6 +123,107 @@
     <script src="../lib/js/jquery.validate.min.js"></script>
     <script src="../lib/js/front.js"></script>
     <script src="../lib/js/sweetalert2.js"></script>
+    <script type="text/javascript">
+        function loadCustInfo(){
+            var acctNum = readCookie("authentication");
+            if(acctNum){
+                $.ajax({
+                    method: "POST",
+                    url: "../src/controller.php",
+                    dataType: "json",
+                    data: {
+                        service:"ServiceAuthentication",
+                    }
+                })
+                    .done(function (result) {
+                        if (result.isError){
+                            swal(
+                                'ผิดพลาด',
+                                result.message,
+                                'error'
+                            );
+                        }
+                        else{
+                            $("#accNo").text(result.accNo.toString().replace(/(\d{1})\-?(\d{3})\-?(\d{3})\-?(\d{3})/, '$1-$2-$3-$4'));
+                            $("#accName").text(result.accName);
+                            $("#accBalance").text(commaSeparateNumber(result.accBalance));
+                        }
+                    }).fail(function(xhr,status,error){
+                    swal(
+                        'ผิดพลาด',
+                        error,
+                        'error'
+                    );
+                });;
+            }
+        }
+
+        function commaSeparateNumber(val) {
+            while (/(\d+)(\d{3})/.test(val.toString())) {
+                val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+            }
+            return val;
+        }
+
+        $("#withdrawalForm").submit(function(event) {
+            event.preventDefault();
+            swal({
+                title: 'ถอนเงิน',
+                html:
+                    '<label>ถอนเงินจากบัญชี</label><br \>'+
+                    '<label>'+$("#accNo").text()+'('+$("#accName").text()+')</label><br \>'+
+                    '<label>เป็นจำนวนเงิน '+commaSeparateNumber($("#amount").val())+'บาท',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+                reverseButtons: true
+            }).then((result) => {
+                if (!result.value) {
+                    $.ajax({
+                        method: "POST",
+                        url: "../src/controller.php",
+                        dataType: "json",
+                        data: {
+                            service:"Withdraw",
+                            transaction: {
+                                acct_num : $("#accNo").text(),
+                                amount : $("#amount").val()
+                            }
+                        }
+                    }).done(function (result) {
+                        if(result.data["errorMessage"]!= null)
+                        {
+                            swal({
+                                title:'ผิดพลาด',
+                                text:result.data["errorMessage"],
+                                type:'error'
+                                });
+                            $('#withdrawalForm')[0].reset();
+                        }else
+                            {
+                                swal({
+                                    title: 'ถอนเงินเรียบร้อย',
+                                    html:
+                                        '<label>ยอดเงินคงเหลือ = </label><br \>'+commaSeparateNumber(result.data["accountBalance"])+'บาท',
+                                    type: 'success'
+                                })
+                                $("#accNo").text(result.data["accountNumber"].toString().replace(/(\d{1})\-?(\d{3})\-?(\d{3})\-?(\d{3})/, '$1-$2-$3-$4'));
+                                $("#accName").text(result.data["accountName"]);
+                                $("#accBalance").text(commaSeparateNumber(result.data["accountBalance"]));
+                                $('#withdrawalForm')[0].reset();
+                            }
+                    }).fail(function(xhr,status,error){
+                        swal(
+                            'ผิดพลาด',
+                            error,
+                            'error'
+                        );
+                    });
+                }
+            }).catch(swal.noop);
+        });
+    </script>
 </body>
 
 </html>

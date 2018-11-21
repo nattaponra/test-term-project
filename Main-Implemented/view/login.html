@@ -69,7 +69,7 @@
                                             <label for="pin" class="label-material">หมายเลข PIN 4 หลัก</label>
                                             <input id="pin" type="password" name="pin" minlength="4" maxlength="4" required class="form-control" placeholder="xxxx">
                                         </div>
-                                        <p id="msg" style="color:red">msg</p>
+                                        <p id="msg" style="color:red"></p>
                                         <!-- <a id="login" href="index.html" class="btn btn-primary">Login</a> -->
                                         <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
                                         <!-- This should be submit button but I replaced it with <a> for demo purposes-->
@@ -94,6 +94,44 @@
         <script src="../lib/js/jquery.validate.min.js"></script>
         <script src="../lib/js/front.js"></script>
         <script src="../lib/js/sweetalert2.js"></script>
+        <script src="../lib/js/cookie-mgmt.js"></script>
+        <script type="text/javascript">
+
+            function removeErrMsg(){
+                $("#msg").text("");
+            }
+
+            $( "#loginForm" ).submit(function( event ) {
+                $.ajax({
+                    method: "POST",
+                    url: "../src/controller.php",
+                    dataType: "json",
+                    data: {
+                        service:"Authentication",
+                        transaction: {
+                            acct_num : $("#accNo").val(),
+                            pin : $("#pin").val()
+                        }
+                    }
+                })
+                    .done(function (result) {
+                        if (result.isError){
+                            $("#msg").text(result.message);
+                        }
+                        else{
+                            createCookie("authentication",$("#accNo").val(),1);
+                            window.location.pathname = "/view/main.html";
+                        }
+                    }).fail(function(xhr,status,error){
+                    swal(
+                        'ผิดพลาด',
+                        error,
+                        'error'
+                    );
+                });
+                event.preventDefault();
+            });
+        </script>
     </body>
     
     </html>
