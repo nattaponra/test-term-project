@@ -9,12 +9,12 @@ services:
     ports:
      - "80:80"
     volumes:
-    - ./Main-Implemented:/code
+    - ./Main-Implemented:/app
     - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
 
   phpfpm:
     container_name: phpfpm
-    image: php:7.2-fpm
+    image: nattaponra/php-fpm:7.1
     volumes:
-    - ./Main-Implemented:/code
+    - ./Main-Implemented:/app
 
