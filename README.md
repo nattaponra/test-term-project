@@ -25,3 +25,5 @@ docker exec -i phpfpm composer install
 docker exec -i phpfpm ./vendor/bin/phpunit ./test/
 ```
 
+#### 6. Open website 
+http://127.0.0.1/view/login.html
