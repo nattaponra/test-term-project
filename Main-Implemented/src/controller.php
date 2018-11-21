@@ -12,9 +12,9 @@ require_once "withdraw/Withdrawal.php";
 require_once "serviceauthentication/serviceauthentication.php";
 
 use Operation\Authentication;
-use Operation\DepositService;
-use Operation\Transfer;
-use Operation\BillPayment;
+//use Operation\DepositService;
+//use Operation\Transfer;
+//use Operation\BillPayment;
 
 $logFile = "../errorlog.txt";
 $service = $_POST["service"];
