@@ -171,8 +171,8 @@
                 title: 'ถอนเงิน',
                 html:
                     '<label>ถอนเงินจากบัญชี</label><br \>'+
-                    '<label>'+$("#accNo").text()+'('+$("#accName").text()+')</label><br \>'+
-                    '<label>เป็นจำนวนเงิน '+commaSeparateNumber($("#amount").val())+'บาท',
+                    '<label>'+$("#accNo").text()+' ('+$("#accName").text()+')</label><br \>'+
+                    '<label>เป็นจำนวนเงิน '+commaSeparateNumber($("#amount").val())+' บาท',
                 type: 'info',
                 showCancelButton: true,
                 confirmButtonText: 'ยืนยัน',
@@ -205,7 +205,7 @@
                                 swal({
                                     title: 'ถอนเงินเรียบร้อย',
                                     html:
-                                        '<label>ยอดเงินคงเหลือ = </label><br \>'+commaSeparateNumber(result.data["accountBalance"])+'บาท',
+                                        '<label>ยอดเงินคงเหลือ = </label><br \>'+commaSeparateNumber(result.data["accountBalance"])+' บาท',
                                     type: 'success'
                                 })
                                 $("#accNo").text(result.data["accountNumber"].toString().replace(/(\d{1})\-?(\d{3})\-?(\d{3})\-?(\d{3})/, '$1-$2-$3-$4'));
