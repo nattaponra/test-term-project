@@ -3,7 +3,7 @@
 include_once 'ServiceType.php';
 include_once 'AccountInformationException.php';
 include_once 'BillingException.php';
-include_once 'serviceauthentication.php';
+//include_once 'serviceauthentication.php';
 
 class DBConnection {
 
@@ -41,8 +41,7 @@ class DBConnection {
         }
     }
 
-    //original
-    /*public static function saveTransaction(string $accNo, int $updatedBalance): bool {
+    public static function saveTransaction(string $accNo, int $updatedBalance): bool {
         $con = DBConnection::getInstance();
         $stmt = $con->prepare(
             "UPDATE ACCOUNT SET balance = :updatedBalance WHERE no = :accNo"
@@ -54,11 +53,12 @@ class DBConnection {
             ]);
 
         return !empty($result);
-    }*/
-
-    public static function saveTransaction(string $accNo, int $updatedBalance): bool {
-        return serviceauthentication::updatedBalance($accNo, $updatedBalance);
     }
+
+    //stub
+    /*public static function saveTransaction(string $accNo, int $updatedBalance): bool {
+        return serviceauthentication::updatedBalance($accNo, $updatedBalance);
+    }*/
 
     public static function getCharge(string $accNo, int $type): int {
         $con = DBConnection::getInstance();

@@ -7,7 +7,7 @@ class ServiceAuthentication{
 	private static $data;
 
     public static function accountAuthenticationProvider(string $accNo): array {
-    	ServiceAuthentication::readFile();
+    	/*ServiceAuthentication::readFile();
     	$result = array("accNo" => '', "accName" => '', "accBalance" => '');
     	$found = false;
 
@@ -27,13 +27,12 @@ class ServiceAuthentication{
     	{
     		throw new AccountInformationException("Account number : {$accNo} not found.");
     	}
-    	return $result;
+    	return $result;*/
 
-    	//original
-        //return DBConnection::accountInformationProvider($accNo);
+        return DBConnection::accountInformationProvider($accNo);
     }
 
-    private function readFile(): void 
+    /*private function readFile(): void 
     {
     	if($GLOBALS['data'] === NULL)
     	{
@@ -96,5 +95,5 @@ class ServiceAuthentication{
         }
         ServiceAuthentication::writeFile();
         return true;
-    }
+    }*/
 }
