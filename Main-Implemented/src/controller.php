@@ -51,8 +51,8 @@ try{
       }
       elseif ($service == "Withdraw"){
         $transaction = $_POST["transaction"];
-       $withdrawal = new Withdrawal($session);
-       echo json_encode(output2JSON($withdrawal->withdraw($transaction["amount"])));
+        $withdrawal = new Withdrawal($session);
+        echo json_encode(output2JSON($withdrawal->withdraw($transaction["amount"])));
       }
       elseif ($service == "Transfer"){
         $transaction = $_POST["transaction"];
