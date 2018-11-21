@@ -1,7 +1,7 @@
 <?php
 
-require_once "serviceauthentication/serviceauthentication.php";
-require_once "serviceauthentication/DBConnection.php";
+require_once __DIR__."/../serviceauthentication/serviceauthentication.php";
+require_once __DIR__."/../serviceauthentication/DBConnection.php";
 
 class Withdrawal
 {
@@ -9,6 +9,11 @@ class Withdrawal
     public function __construct($session)
     {
         $this->acctNum = $session;
+    }
+
+    public function getAccountAuthenticationProvider(){
+        return ServiceAuthentication::accountAuthenticationProvider($this->acctNum);
+
     }
 
     public function withdraw($amount):array
@@ -36,7 +41,7 @@ class Withdrawal
             {
                try
                {
-                    $result_AccountAuthen = ServiceAuthentication::accountAuthenticationProvider($this->acctNum);
+                    $result_AccountAuthen = $this->getAccountAuthenticationProvider();
                     $amount_balance = $result_AccountAuthen["accBalance"];
                     if($amount_balance >= $amount)
                     {
