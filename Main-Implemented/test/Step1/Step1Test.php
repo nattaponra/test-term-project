@@ -1,10 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
+require_once __DIR__ . '/../SECUTestCase.php';
 require_once __DIR__ . '/../../src/withdraw/Withdrawal.php';
 
-final class Step1Test extends TestCase
+final class Step1Test extends SECUTestCase
 {
 
     function testWithdrawBalanceHasInsufficient()
