@@ -3,6 +3,7 @@
 include_once 'ServiceType.php';
 include_once 'AccountInformationException.php';
 include_once 'BillingException.php';
+//include_once 'serviceauthentication.php';
 
 class DBConnection {
 
@@ -53,6 +54,11 @@ class DBConnection {
 
         return !empty($result);
     }
+
+    //stub
+    /*public static function saveTransaction(string $accNo, int $updatedBalance): bool {
+        return serviceauthentication::updatedBalance($accNo, $updatedBalance);
+    }*/
 
     public static function getCharge(string $accNo, int $type): int {
         $con = DBConnection::getInstance();
