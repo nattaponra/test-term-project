@@ -72,12 +72,12 @@ class Withdrawal
                }
             }else
             {
-                $result["errorMessage"] = "หมายเลขบัญชีต้องเป็นตัวเลขเท่านั้น";
+                $result["errorMessage"] = "หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก";
                 return $result;
             }
         }else
         {
-            $result["errorMessage"]= "หมายเลขบัญชีต้องมีจำนวนทั้งหมด 10 หลัก";
+            $result["errorMessage"]= "หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก";
             return $result;
         }
         return $result;
