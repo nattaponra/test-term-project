@@ -1,7 +1,7 @@
 <?php
 
-require_once "serviceauthentication/serviceauthentication.php";
-require_once "serviceauthentication/DBConnection.php";
+require_once __DIR__."/../serviceauthentication/serviceauthentication.php";
+require_once __DIR__."/../serviceauthentication/DBConnection.php";
 
 class Withdrawal
 {
@@ -9,6 +9,15 @@ class Withdrawal
     public function __construct($session)
     {
         $this->acctNum = $session;
+    }
+
+    public function getAccountAuthenticationProvider(){
+        return ServiceAuthentication::accountAuthenticationProvider($this->acctNum);
+
+    }
+
+    public function saveTransaction($amountBalance){
+      return  DBConnection::saveTransaction($this->acctNum,$amountBalance);
     }
 
     public function withdraw($amount):array
@@ -30,22 +39,22 @@ class Withdrawal
             $result["errorMessage"] = "จำนวนเงินต้องเป็นตัวเลขเท่านั้น";
             return $result;
         }
-        if(strlen(strlen($this->acctNum) == 10))
+        if(strlen($this->acctNum) == 10)
         {
             if(is_numeric($this->acctNum))
             {
                try
                {
-                    $result_AccountAuthen = ServiceAuthentication::accountAuthenticationProvider($this->acctNum);
-                    $amount_balance = $result_AccountAuthen["accBalance"];
-                    if($amount_balance >= $amount)
+                    $resultAccountAuthen = $this->getAccountAuthenticationProvider();
+                    $amountBalance = $resultAccountAuthen["accBalance"];
+                    if($amountBalance >= $amount)
                     {
-                        $amount_balance = $amount_balance - $amount;
-                        if(DBConnection::saveTransaction($this->acctNum,$amount_balance))
+                        $amountBalance = $amountBalance - $amount;
+                        if($this->saveTransaction($amountBalance))
                         {
-                            $result["accountNumber"] = $result_AccountAuthen["accNo"];
-                            $result["accountName"] = $result_AccountAuthen["accName"];
-                            $result["accountBalance"] = $amount_balance;
+                            $result["accountNumber"] = $resultAccountAuthen["accNo"];
+                            $result["accountName"] = $resultAccountAuthen["accName"];
+                            $result["accountBalance"] = $amountBalance;
                         }else
                         {
                             $result["errorMessage"] = "ระบบขัดข้อง ไม่สามารถถอนเงินได้";
