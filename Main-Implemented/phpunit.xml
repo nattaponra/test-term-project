@@ -1,19 +1,7 @@
 <phpunit>
-    <testsuites>
-        <testsuite name="Deposit">
-            <directory suffix="Test.php">test/Deposit</directory>
-        </testsuite>
-    </testsuites>
-    <!--
-    <testsuites>
-        <testsuite name="Operation">
-            <directory suffix="Test.php">test</directory>
-        </testsuite>
-        
-        <testsuite name="Output">
-            <directory suffix="Test.php">test</directory>
-        </testsuite>
-       
-    </testsuites>
-     -->
+    <php>
+        <env name="dsn" value="mysql:dbname=my_database;host=mysql"/>
+        <env name="user" value="my_user"/>
+        <env name="pass" value="my_password"/>
+    </php>
 </phpunit>

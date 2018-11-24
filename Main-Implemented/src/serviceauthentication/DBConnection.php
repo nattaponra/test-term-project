@@ -7,9 +7,9 @@ include_once 'BillingException.php';
 
 class DBConnection {
 
-    private static $dsn = 'mysql:dbname=u334971496_cutqa;host=sql128.main-hosting.eu';
-    private static $user = 'u334971496_cutqa';
-    private static $pass = 'cutqa1234';
+    protected static $dsn  = 'mysql:dbname=u334971496_cutqa;host=sql128.main-hosting.eu';
+    protected static $user = 'u334971496_cutqa';
+    protected static $pass = 'cutqa1234';
     private static $con = null;
 
     public static function getInstance() {
