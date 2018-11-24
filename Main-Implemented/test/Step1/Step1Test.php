@@ -258,7 +258,7 @@ final class Step1Test extends SECUTestCase
 
 
         $result = $withdraw->withdraw(1);
-        $this->assertEquals(ยอดเงินในบัญชีไม่เพียงพอ, $result["errorMessage"]);
+        $this->assertEquals('ยอดเงินในบัญชีไม่เพียงพอ', $result["errorMessage"]);
     }
     function testWD13WithdrawnotComplete_w20000_b19999_Notallowtowithdraw()
     {
