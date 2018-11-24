@@ -11,11 +11,11 @@ final class Step2Test extends SECUTestCase
     function testWD01WithdrawComplete_w10000_b20000_Remian10000()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "Withdrawal TEst", 20000);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(10000);
 
@@ -30,11 +30,11 @@ final class Step2Test extends SECUTestCase
     function testWD02WithdrawComplete_w1_b5_Remain4()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 5);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(1);
 
@@ -49,11 +49,11 @@ final class Step2Test extends SECUTestCase
     function testWD03WithdrawComplete_w20000_b20500_Remian500()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20500);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(20000);
 
@@ -69,11 +69,11 @@ final class Step2Test extends SECUTestCase
     {
 
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20002);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(20001);
 
@@ -89,11 +89,11 @@ final class Step2Test extends SECUTestCase
     {
 
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 5);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(0);
 
@@ -108,11 +108,11 @@ final class Step2Test extends SECUTestCase
     function testWD06WithdrawComplete_w10000_b10000_Remian0()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 10000);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(10000);
 
@@ -127,11 +127,11 @@ final class Step2Test extends SECUTestCase
     function testWD07WithdrawComplete_w1_b1_Remian0()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 1);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(1);
 
@@ -146,11 +146,11 @@ final class Step2Test extends SECUTestCase
     function testWD08WithdrawComplete_w20000_b20000_Remian0()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20000);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(20000);
 
@@ -165,11 +165,11 @@ final class Step2Test extends SECUTestCase
     function testWD09WithdrawnotComplete_w20001_b20001_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20001);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(20001);
 
@@ -184,11 +184,11 @@ final class Step2Test extends SECUTestCase
     function testWD10WithdrawnotComplete_w0_b0_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 0);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(0);
 
@@ -203,11 +203,11 @@ final class Step2Test extends SECUTestCase
     function testWD11WithdrawnotComplete_w10000_b9999_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 9999);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(10000);
 
@@ -222,11 +222,11 @@ final class Step2Test extends SECUTestCase
     function testWD12WithdrawnotComplete_w1_b05_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 0);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(1);
 
@@ -241,11 +241,11 @@ final class Step2Test extends SECUTestCase
     function testWD13WithdrawnotComplete_w20000_b19999_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 19999);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(20000);
 
@@ -260,11 +260,11 @@ final class Step2Test extends SECUTestCase
     function testWD14WithdrawnotComplete_w20001_b20000_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20000);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw(20001);
 
@@ -279,11 +279,11 @@ final class Step2Test extends SECUTestCase
     function testWD15WithdrawnotComplete_w20k_b20000_Notallowtowithdraw()
     {
 
-        //สร้าง User ที่มีเงิน 50,000
+        //สร้าง User
         $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20000);
 
         try{
-            //Driver Main เพื่อถอนเงิน 60,000
+            //Driver Main เพื่อถอนเงิน
             $withdraw = new Withdrawal("9988776655");
             $result = $withdraw->withdraw('20k');
 
