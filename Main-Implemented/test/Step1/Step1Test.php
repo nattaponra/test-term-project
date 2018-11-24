@@ -302,7 +302,7 @@ final class Step1Test extends SECUTestCase
         $result = $withdraw->withdraw(20001);
         $this->assertEquals('จำนวนเงินต้องไม่เกิน 20,000 บาท', $result["errorMessage"]);
     }
-    function testWD15WithdrawnotComplete_w200l_b35000_Notallowtowithdraw()
+    function testWD15WithdrawnotComplete_w20k_b20000_Notallowtowithdraw()
     {
         $withdraw = $this->getMockBuilder(Withdrawal::class)
             ->setConstructorArgs(["1234567890"])
@@ -313,14 +313,14 @@ final class Step1Test extends SECUTestCase
             ->willReturn([
                 "accNo" => "1234567890",
                 "accName" => "XXXXX  YYYYY",
-                "accBalance" => 35000
+                "accBalance" => 20000
             ]);
 
         //Stub saveTransaction
         $withdraw->method('saveTransaction')->willReturn(true);
 
 
-        $result = $withdraw->withdraw('200k');
+        $result = $withdraw->withdraw('20k');
         $this->assertEquals('จำนวนเงินต้องเป็นตัวเลขเท่านั้น', $result["errorMessage"]);
     }
 }

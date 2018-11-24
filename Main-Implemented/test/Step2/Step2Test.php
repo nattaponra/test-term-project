@@ -8,7 +8,7 @@ require_once __DIR__ . '/../SECUTestCase.php';
 final class Step2Test extends SECUTestCase
 {
 
-    function testWD01WithdrawComplete_x10000_y20000_Remian10000()
+    function testWD01WithdrawComplete_w10000_b20000_Remian10000()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -27,7 +27,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD02WithdrawComplete_x1_y5_Remain4()
+    function testWD02WithdrawComplete_w1_b5_Remain4()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -46,7 +46,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD03WithdrawComplete_x20000_y20500_Remian500()
+    function testWD03WithdrawComplete_w20000_b20500_Remian500()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -65,7 +65,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD04WithdrawnotComplete_x20001_y20002_Notallowtowithdraw()
+    function testWD04WithdrawnotComplete_w20001_b20002_Notallowtowithdraw()
     {
 
 
@@ -85,7 +85,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD05WithdrawnotComplete_x0_y5_Notallowtowithdraw()
+    function testWD05WithdrawnotComplete_w0_b5_Notallowtowithdraw()
     {
 
 
@@ -105,7 +105,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD06WithdrawComplete_x10000_y10000_0()
+    function testWD06WithdrawComplete_w10000_b10000_Remian0()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -124,7 +124,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD07WithdrawComplete_x1_y1_0()
+    function testWD07WithdrawComplete_w1_b1_Remian0()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -143,7 +143,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD08WithdrawComplete_x20000_y20000_0()
+    function testWD08WithdrawComplete_w20000_b20000_Remian0()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -162,7 +162,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD09WithdrawnotComplete_x20001_y20001_Notallowtowithdraw()
+    function testWD09WithdrawnotComplete_w20001_b20001_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -181,7 +181,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD10WithdrawnotComplete_x0_y0_Notallowtowithdraw()
+    function testWD10WithdrawnotComplete_w0_b0_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -200,7 +200,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD11WithdrawnotComplete_x10000_y9999_Notallowtowithdraw()
+    function testWD11WithdrawnotComplete_w10000_b9999_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -219,11 +219,11 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD12WithdrawnotComplete_x1_y05_Notallowtowithdraw()
+    function testWD12WithdrawnotComplete_w1_b05_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
-        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 0.5);
+        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 0);
 
         try{
             //Driver Main เพื่อถอนเงิน 60,000
@@ -238,7 +238,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD13WithdrawnotComplete_x20000_y19999_Notallowtowithdraw()
+    function testWD13WithdrawnotComplete_w20000_b19999_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -257,7 +257,7 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD14WithdrawnotComplete_x20001_y20000_Notallowtowithdraw()
+    function testWD14WithdrawnotComplete_w20001_b20000_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
@@ -276,35 +276,16 @@ final class Step2Test extends SECUTestCase
         }
     }
 
-    function testWD15WithdrawnotComplete_x05_y0_Notallowtowithdraw()
+    function testWD15WithdrawnotComplete_w20k_b20000_Notallowtowithdraw()
     {
 
         //สร้าง User ที่มีเงิน 50,000
-        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 0);
+        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20000);
 
         try{
             //Driver Main เพื่อถอนเงิน 60,000
             $withdraw = new Withdrawal("9988776655");
-            $result = $withdraw->withdraw(0.5);
-
-            //ตรวจสอบผล
-            $this->assertEquals("จำนวนเงินต้องไม่น้อยกว่า 1 บาท", $result["errorMessage"]);
-        }finally{
-            //ลบ user ที่สร้าง
-            $this->databaseTest()->removeUser("9988776655", "3323");
-        }
-    }
-
-    function testWD16WithdrawnotComplete_x200k_y35000_Notallowtowithdraw()
-    {
-
-        //สร้าง User ที่มีเงิน 50,000
-        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 35000);
-
-        try{
-            //Driver Main เพื่อถอนเงิน 60,000
-            $withdraw = new Withdrawal("9988776655");
-            $result = $withdraw->withdraw('200k');
+            $result = $withdraw->withdraw('20k');
 
             //ตรวจสอบผล
             $this->assertEquals("จำนวนเงินต้องเป็นตัวเลขเท่านั้น", $result["errorMessage"]);
@@ -312,45 +293,5 @@ final class Step2Test extends SECUTestCase
             //ลบ user ที่สร้าง
             $this->databaseTest()->removeUser("9988776655", "3323");
         }
-    }
-
-    function testWD17Withdraw_0_5_30500_error()
-    {
-
-        //สร้าง User ที่มีเงิน 50,000
-        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 30500);
-
-        try{
-            //Driver Main เพื่อถอนเงิน 60,000
-            $withdraw = new Withdrawal("9988776655");
-            $result = $withdraw->withdraw(0.5);
-
-            //ตรวจสอบผล
-            $this->assertEquals(30499.5, $result["accountBalance"]);
-        }finally{
-            //ลบ user ที่สร้าง
-            $this->databaseTest()->removeUser("9988776655", "3323");
-        }
-    }
-
-
-    function testWD18Withdraw_0_5_30500_error()
-    {
-
-        //สร้าง User ที่มีเงิน 50,000
-        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 30500);
-
-        try{
-            //Driver Main เพื่อถอนเงิน 60,000
-            $withdraw = new Withdrawal("9988776655");
-            $result = $withdraw->withdraw(0.5);
-
-            //ตรวจสอบผล
-            $this->assertEquals(30499.5, $result["errorMessage"]);
-        }finally{
-            //ลบ user ที่สร้าง
-            $this->databaseTest()->removeUser("9988776655", "3323");
-        }
-
     }
 }
