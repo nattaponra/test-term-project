@@ -23,7 +23,31 @@ class Withdrawal
     public function withdraw($amount):array
     {
         $result = array("accountNumber" => '',"accountName" => '' ,"accountBalance" => '',"errorMessage" => '');
+        $resultAccountAuthen = array();
         
+        if(strlen($this->acctNum) == 10)
+        {
+            if(ctype_digit($this->acctNum))
+            {
+                try
+               {
+                    $resultAccountAuthen = $this->getAccountAuthenticationProvider();
+               }catch(AccountInformationException $e)
+               {
+                   $result["errorMessage"] = $e->getMessage();
+                   return $result;
+               }
+            }else
+            {
+                $result["errorMessage"] = "หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก";
+                return $result;
+            }
+        }else
+        {
+            $result["errorMessage"]= "หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก";
+            return $result;
+        }
+
         if(is_string($amount))
         {
             if(ctype_digit($amount))
@@ -59,47 +83,26 @@ class Withdrawal
             return $result;
         }
 
-        if(strlen($this->acctNum) == 10)
+        $amountBalance = $resultAccountAuthen["accBalance"];
+        if($amountBalance >= $amount)
         {
-            if(is_numeric($this->acctNum))
+            $amountBalance = $amountBalance - $amount;
+            if($this->saveTransaction($amountBalance))
             {
-               try
-               {
-                    $resultAccountAuthen = $this->getAccountAuthenticationProvider();
-                    $amountBalance = $resultAccountAuthen["accBalance"];
-                    if($amountBalance >= $amount)
-                    {
-                        $amountBalance = $amountBalance - $amount;
-                        if($this->saveTransaction($amountBalance))
-                        {
-                            $result["accountNumber"] = $resultAccountAuthen["accNo"];
-                            $result["accountName"] = $resultAccountAuthen["accName"];
-                            $result["accountBalance"] = $amountBalance;
-                        }else
-                        {
-                            $result["errorMessage"] = "ระบบขัดข้อง ไม่สามารถถอนเงินได้";
-                            return $result;
-                        }
-                    }else
-                    {
-                        $result["errorMessage"] = "ยอดเงินในบัญชีไม่เพียงพอ";
-                        return $result;
-                    }
-               }catch(AccountInformationException $e)
-               {
-                   $result["errorMessage"] = $e->getMessage();
-                   return $result;
-               }
+                $result["accountNumber"] = $resultAccountAuthen["accNo"];
+                $result["accountName"] = $resultAccountAuthen["accName"];
+                $result["accountBalance"] = $amountBalance;
             }else
             {
-                $result["errorMessage"] = "หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก";
+                $result["errorMessage"] = "ระบบขัดข้อง ไม่สามารถถอนเงินได้";
                 return $result;
             }
         }else
         {
-            $result["errorMessage"]= "หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก";
+            $result["errorMessage"] = "ยอดเงินในบัญชีไม่เพียงพอ";
             return $result;
         }
+        
         return $result;
     }
 }
