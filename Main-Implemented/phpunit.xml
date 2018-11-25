@@ -1,3 +1,5 @@
+
+<!--################### For Docker ##################-->
 <phpunit>
     <php>
         <env name="dsn" value="mysql:dbname=my_database;host=mysql"/>
@@ -5,3 +7,18 @@
         <env name="pass" value="my_password"/>
     </php>
 </phpunit>
+
+
+
+<!--################### For XAMPP ##################-->
+<!--<phpunit>-->
+<!--<php>-->
+    <!--<env name="dsn" value="mysql:dbname=u334971496_cutqa;host=sql128.main-hosting.eu"/>-->
+    <!--<env name="user" value="u334971496_cutqa"/>-->
+    <!--<env name="pass" value="cutqa1234"/>-->
+<!--</php>-->
+<!--</phpunit>-->
+
+
+
+
