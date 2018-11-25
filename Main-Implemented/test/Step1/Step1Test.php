@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../SECUTestCase.php';
 require_once __DIR__ . '/../../src/withdraw/Withdrawal.php';
+require_once __DIR__ . '/../../src/serviceauthentication/AccountInformationException.php';
 
 final class Step1Test extends SECUTestCase
 {
@@ -322,5 +323,123 @@ final class Step1Test extends SECUTestCase
 
         $result = $withdraw->withdraw('20k');
         $this->assertEquals('จำนวนเงินต้องเป็นตัวเลขเท่านั้น', $result["errorMessage"]);
+    }
+    function testWD16WithdrawnotComplete_w2000dot5_b20000_Notallowtowithdraw()
+    {
+        $withdraw = $this->getMockBuilder(Withdrawal::class)
+            ->setConstructorArgs(["1234567890"])
+            ->setMethods(['getAccountAuthenticationProvider','saveTransaction'])
+            ->getMock();
+
+        $withdraw->method('getAccountAuthenticationProvider')
+            ->willReturn([
+                "accNo" => "1234567890",
+                "accName" => "XXXXX  YYYYY",
+                "accBalance" => 20000
+            ]);
+
+        //Stub saveTransaction
+        $withdraw->method('saveTransaction')->willReturn(true);
+
+
+        $result = $withdraw->withdraw(2000.5);
+        $this->assertEquals('จำนวนเงินต้องเป็นตัวเลขเท่านั้น', $result["errorMessage"]);
+    }
+    function testWD17WithdrawnotComplete_w2000dot0_b20000_Notallowtowithdraw()
+    {
+        $withdraw = $this->getMockBuilder(Withdrawal::class)
+            ->setConstructorArgs(["1234567890"])
+            ->setMethods(['getAccountAuthenticationProvider','saveTransaction'])
+            ->getMock();
+
+        $withdraw->method('getAccountAuthenticationProvider')
+            ->willReturn([
+                "accNo" => "1234567890",
+                "accName" => "XXXXX  YYYYY",
+                "accBalance" => 20000
+            ]);
+
+        //Stub saveTransaction
+        $withdraw->method('saveTransaction')->willReturn(true);
+
+
+        $result = $withdraw->withdraw(2000.0);
+        $this->assertEquals('จำนวนเงินต้องเป็นตัวเลขเท่านั้น', $result["errorMessage"]);
+    }
+    function testWD18AccountNotFound()
+    {
+        $withdraw = $this->getMockBuilder(Withdrawal::class)
+            ->setConstructorArgs(["1111111111"])
+            ->setMethods(['getAccountAuthenticationProvider','saveTransaction'])
+            ->getMock();
+
+        $withdraw->method('getAccountAuthenticationProvider')
+            ->willThrowException(new AccountInformationException("Account number : 1111111111 not found."));
+
+        //Stub saveTransaction
+        $withdraw->method('saveTransaction')->willReturn(true);
+
+        $result = $withdraw->withdraw(2000);
+        $this->assertEquals('Account number : 1111111111 not found.', $result["errorMessage"]);
+    }
+    function testWD19AccountLengthNot10()
+    {
+        $withdraw = $this->getMockBuilder(Withdrawal::class)
+            ->setConstructorArgs(["111111111"])
+            ->setMethods(['getAccountAuthenticationProvider','saveTransaction'])
+            ->getMock();
+
+        $withdraw->method('getAccountAuthenticationProvider')
+            ->willReturn([
+                "accNo" => "111111111",
+                "accName" => "XXXXX  YYYYY",
+                "accBalance" => 20000
+            ]);
+
+        //Stub saveTransaction
+        $withdraw->method('saveTransaction')->willReturn(true);
+
+        $result = $withdraw->withdraw(2000);
+        $this->assertEquals('หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก', $result["errorMessage"]);
+    }
+    function testWD20AccountWithChar()
+    {
+        $withdraw = $this->getMockBuilder(Withdrawal::class)
+            ->setConstructorArgs(["a111111111"])
+            ->setMethods(['getAccountAuthenticationProvider','saveTransaction'])
+            ->getMock();
+
+        $withdraw->method('getAccountAuthenticationProvider')
+            ->willReturn([
+                "accNo" => "a111111111",
+                "accName" => "XXXXX  YYYYY",
+                "accBalance" => 20000
+            ]);
+
+        //Stub saveTransaction
+        $withdraw->method('saveTransaction')->willReturn(true);
+
+        $result = $withdraw->withdraw(2000);
+        $this->assertEquals('หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก', $result["errorMessage"]);
+    }
+    function testWD21AccountDecimalNum()
+    {
+        $withdraw = $this->getMockBuilder(Withdrawal::class)
+            ->setConstructorArgs(["1.11111111"])
+            ->setMethods(['getAccountAuthenticationProvider','saveTransaction'])
+            ->getMock();
+
+        $withdraw->method('getAccountAuthenticationProvider')
+            ->willReturn([
+                "accNo" => "1.11111111",
+                "accName" => "XXXXX  YYYYY",
+                "accBalance" => 20000
+            ]);
+
+        //Stub saveTransaction
+        $withdraw->method('saveTransaction')->willReturn(true);
+
+        $result = $withdraw->withdraw(2000);
+        $this->assertEquals('หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก', $result["errorMessage"]);
     }
 }
