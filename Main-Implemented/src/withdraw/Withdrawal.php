@@ -23,7 +23,26 @@ class Withdrawal
     public function withdraw($amount):array
     {
         $result = array("accountNumber" => '',"accountName" => '' ,"accountBalance" => '',"errorMessage" => '');
-        if(is_numeric($amount))
+        
+        if(is_string($amount))
+        {
+            if(ctype_digit($amount))
+            {
+                if($amount > 20000)
+                {
+                    $result["errorMessage"] = "จำนวนเงินต้องไม่เกิน 20,000 บาท";
+                    return $result;
+                }elseif($amount < 1)
+                {
+                    $result["errorMessage"] = "จำนวนเงินต้องไม่น้อยกว่า 1 บาท";
+                    return $result;
+                }
+            }else
+            {
+                $result["errorMessage"] = "จำนวนเงินต้องเป็นตัวเลขเท่านั้น";
+                return $result;
+            }
+        }elseif(is_int($amount))
         {
             if($amount > 20000)
             {
@@ -39,6 +58,7 @@ class Withdrawal
             $result["errorMessage"] = "จำนวนเงินต้องเป็นตัวเลขเท่านั้น";
             return $result;
         }
+
         if(strlen($this->acctNum) == 10)
         {
             if(is_numeric($this->acctNum))
