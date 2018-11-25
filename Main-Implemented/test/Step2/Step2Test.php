@@ -337,7 +337,7 @@ final class Step2Test extends SECUTestCase
         $result = $withdraw->withdraw(2000);
 
         //ตรวจสอบผล
-        $this->assertEquals('Account number : 1111111111 not found.', $result["errorMessage"]);
+        $this->assertEquals('Account number : 0000000000 not found.', $result["errorMessage"]);
     }
 
     function testWD19AccountLengthNot10()
