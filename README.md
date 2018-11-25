@@ -21,9 +21,25 @@ docker exec -i phpfpm composer install
 ```
 
 #### 5.Run PHPUnit
+
 ```
 docker exec -i phpfpm ./vendor/bin/phpunit ./test/
+
+```
+##### Option
+Run all test case
+```
+./run-test-all.sh
 ```
 
+Run step1
+```
+./run-test-step1.sh
+```
+
+Run step2
+```
+./run-test-step2.sh
+```
 #### 6. Open website 
 http://127.0.0.1/view/login.html
