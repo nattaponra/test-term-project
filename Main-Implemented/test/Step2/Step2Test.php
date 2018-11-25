@@ -294,4 +294,75 @@ final class Step2Test extends SECUTestCase
             $this->databaseTest()->removeUser("9988776655", "3323");
         }
     }
+
+    function testWD16WithdrawnotComplete_w2000dot5_b20000_Notallowtowithdraw()
+    {
+        //สร้าง User
+        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20000);
+
+        try{
+            //Driver Main เพื่อถอนเงิน
+            $withdraw = new Withdrawal("9988776655");
+            $result = $withdraw->withdraw(2000.5);
+
+            //ตรวจสอบผล
+            $this->assertEquals("จำนวนเงินต้องเป็นตัวเลขเท่านั้น", $result["errorMessage"]);
+        }finally{
+            //ลบ user ที่สร้าง
+            $this->databaseTest()->removeUser("9988776655", "3323");
+        }
+    }
+
+    function testWD17WithdrawnotComplete_w2000dot0_b20000_Notallowtowithdraw()
+    {
+        //สร้าง User
+        $this->databaseTest()->createUser("9988776655", "3323", "TEST TEST", 20000);
+
+        try{
+            //Driver Main เพื่อถอนเงิน
+            $withdraw = new Withdrawal("9988776655");
+            $result = $withdraw->withdraw(2000.0);
+
+            //ตรวจสอบผล
+            $this->assertEquals("จำนวนเงินต้องเป็นตัวเลขเท่านั้น", $result["errorMessage"]);
+        }finally{
+            //ลบ user ที่สร้าง
+            $this->databaseTest()->removeUser("9988776655", "3323");
+        }
+    }
+
+    function testWD18AccountNotFound()
+    {
+        $withdraw = new Withdrawal("0000000000");
+        $result = $withdraw->withdraw(2000);
+
+        //ตรวจสอบผล
+        $this->assertEquals('Account number : 1111111111 not found.', $result["errorMessage"]);
+    }
+
+    function testWD19AccountLengthNot10()
+    {
+        $withdraw = new Withdrawal("000000000");
+        $result = $withdraw->withdraw(2000);
+
+        //ตรวจสอบผล
+        $this->assertEquals('หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก', $result["errorMessage"]);
+    }
+
+    function testWD20AccountWithChar()
+    {
+        $withdraw = new Withdrawal("a000000000");
+        $result = $withdraw->withdraw(2000);
+
+        //ตรวจสอบผล
+        $this->assertEquals('หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก', $result["errorMessage"]);
+    }
+    function testWD21AccountDecimalNum()
+    {
+        $withdraw = new Withdrawal("1.11111111");
+        $result = $withdraw->withdraw(2000);
+
+        //ตรวจสอบผล
+        $this->assertEquals('หมายเลขบัญชีต้องเป็นตัวเลข 10 หลัก', $result["errorMessage"]);
+    }
 }
